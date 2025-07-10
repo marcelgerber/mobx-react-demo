@@ -4,6 +4,7 @@ import "./App.css";
 import React from "react";
 import { action, observable } from "mobx";
 import { observer } from "mobx-react";
+import { MyComponent } from "./Component";
 
 @observer
 class App extends React.Component {
@@ -33,6 +34,7 @@ class App extends React.Component {
             Edit <code>src/App.tsx</code> and save to test HMR
           </p>
         </div>
+        <MyComponent manager={this} />
         <p className="read-the-docs">
           Click on the Vite and React logos to learn more
         </p>
