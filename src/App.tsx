@@ -2,20 +2,27 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import React from "react";
-import { action, observable } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 import { observer } from "mobx-react";
 
 @observer
 class App extends React.Component {
-  @observable count = 0;
+  @observable accessor count = 0;
 
   @action.bound increment() {
     this.count += 1;
   }
 
-  render() {
-    const { count } = this;
+  @computed get doubleCount() {
+    return this.count * 2;
+  }
 
+  constructor(props: Record<string, unknown>) {
+    super(props);
+    makeObservable(this);
+  }
+
+  render() {
     return (
       <>
         <div>
@@ -28,7 +35,7 @@ class App extends React.Component {
         </div>
         <h1>Vite + React</h1>
         <div className="card">
-          <button onClick={this.increment}>count is {count}</button>
+          <button onClick={this.increment}>count is {this.doubleCount}</button>
           <p>
             Edit <code>src/App.tsx</code> and save to test HMR
           </p>
