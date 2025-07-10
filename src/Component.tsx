@@ -1,4 +1,4 @@
-import { computed } from "mobx";
+import { autorun, computed, makeObservable, observable } from "mobx";
 import { observer } from "mobx-react";
 import React from "react";
 
@@ -12,14 +12,31 @@ interface Props {
 
 @observer
 export class MyComponent extends React.Component<Props> {
-  @computed get manager() {
+  constructor(props: Props) {
+    super(props);
+    makeObservable(this);
+  }
+
+  get manager() {
     return this.props.manager;
   }
-  @computed get count() {
+
+  get count() {
+    console.log("count");
     return this.manager.count;
   }
 
+  get halfCount() {
+    return Math.floor(this.count / 2);
+  }
+
+  get quarterCount() {
+    console.log("quarter");
+    return Math.floor(this.halfCount / 2);
+  }
+
   render() {
-    return <div>Hello, MobX! Counter: {this.count}</div>;
+    console.log("render");
+    return <div>Hello, MobX! Counter: {this.quarterCount}</div>;
   }
 }
