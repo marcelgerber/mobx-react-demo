@@ -19,7 +19,16 @@ export class MyComponent extends React.Component<Props> {
     return this.manager.count;
   }
 
+  @computed get halfCount() {
+    return Math.floor(this.count / 2);
+  }
+
+  @computed get quarterCount() {
+    console.log("quarterCount recomputed");
+    return Math.floor(this.halfCount / 2);
+  }
+
   render() {
-    return <div>Hello, MobX! Counter: {this.count}</div>;
+    return <div>Hello, MobX! Quarter Count: {this.quarterCount}</div>;
   }
 }
